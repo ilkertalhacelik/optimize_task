@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<input id="link" type="text">
+<button id="link_button" onclick="upload()" > Upload </button>
+<label id="result" >Result: </label>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script>
+    function upload(){
+       
+        const link=document.getElementById("link").value;                                        
+     
+        $.ajax({
+            url: 'http://localhost:8000/optimize',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            type: "POST", /* or type:"GET" or type:"PUT" */
+            dataType: "json",
+            data: {image_link:link
+            },
+            success: function (result) {
+                const krakedUrl= result.kraked_url
+                document.getElementById("result").innerHTML=`<label id="result" >Result: </label> <a href=${krakedUrl}>${krakedUrl}</a>`
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+    }
+</script>
+
+</body>
+
+</html>
